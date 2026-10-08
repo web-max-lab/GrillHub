@@ -1,0 +1,2436 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grill Hub | Cafe & Special Mix Grill</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: #171717;
+    background:
+        repeating-linear-gradient(
+            135deg,
+            rgba(150,0,0,.035) 0 35px,
+            rgba(0,0,0,.025) 35px 70px
+        ),
+        #fff;
+}
+
+/* HEADER */
+header {
+    min-height: 70vh;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    padding: 60px 20px;
+    background:
+        linear-gradient(120deg, rgba(0,0,0,.78), rgba(120,0,0,.68)),
+        url("images/grill-hub.jpg") center/cover;
+    color: #fff;
+}
+
+header h1 {
+    font: 700 clamp(55px,10vw,110px)/.9 Georgia, serif;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+}
+
+header p {
+    font-size: 18px;
+    margin: 22px auto;
+    max-width: 650px;
+}
+
+.btn {
+    display: inline-block;
+    background: #b00000;
+    color: #fff;
+    padding: 13px 22px;
+    border-radius: 7px;
+    text-decoration: none;
+    font-weight: 700;
+    border: 0;
+    cursor: pointer;
+}
+
+/* NAVIGATION */
+nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: #111;
+    color: #fff;
+    padding: 12px;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    justify-content: center;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    padding: 9px 13px;
+    white-space: nowrap;
+    border-radius: 20px;
+}
+
+nav a:hover {
+    background: #b00000;
+}
+
+/* MAIN */
+main {
+    max-width: 1250px;
+    margin: auto;
+    padding: 55px 18px;
+}
+
+.intro {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.intro h2 {
+    font: 700 42px Georgia, serif;
+    color: #a00000;
+}
+
+.intro p {
+    margin-top: 8px;
+    color: #555;
+}
+
+.category {
+    margin: 50px 0;
+}
+
+.category h2 {
+    font: 700 32px Georgia, serif;
+    color: #a00000;
+    border-left: 6px solid #111;
+    padding-left: 14px;
+    margin-bottom: 20px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+}
+
+/* FOOD CARD */
+.card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0,0,0,.08);
+    display: flex;
+    flex-direction: column;
+    transition: .2s;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 28px rgba(0,0,0,.14);
+}
+
+.card img {
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+    background: #eee;
+}
+
+.info {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.info h3 {
+    font: 700 21px Georgia, serif;
+    margin-bottom: 8px;
+}
+
+.price {
+    color: #b00000;
+    font-weight: 800;
+    font-size: 18px;
+    margin-bottom: 13px;
+}
+
+.add {
+    margin-top: auto;
+    background: #111;
+    color: #fff;
+    border: 0;
+    border-radius: 6px;
+    padding: 11px;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.add:hover {
+    background: #b00000;
+}
+
+/* FOOTER */
+footer {
+    background: #111;
+    color: #fff;
+    text-align: center;
+    padding: 35px 20px;
+    margin-top: 30px;
+}
+
+/* CART BUTTON */
+.cart-btn {
+    position: fixed;
+    right: 22px;
+    bottom: 22px;
+    z-index: 2000;
+    background: #b00000;
+    color: #fff;
+    border: 0;
+    border-radius: 50px;
+    padding: 15px 20px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 8px 25px #0005;
+}
+
+#count {
+    background: #e6b400;
+    color: #111;
+    border-radius: 50%;
+    padding: 4px 8px;
+    margin-left: 5px;
+}
+
+/* CART OVERLAY */
+.overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #0008;
+    z-index: 3000;
+}
+
+.cart {
+    margin-left: auto;
+    background: #fff;
+    width: min(460px, 100%);
+    height: 100%;
+    padding: 22px;
+    overflow: auto;
+}
+
+.carthead {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #b00000;
+    padding-bottom: 15px;
+}
+
+.carthead h2 {
+    font: 700 30px Georgia, serif;
+    color: #a00000;
+}
+
+.close {
+    background: none;
+    border: 0;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.cartitem {
+    display: flex;
+    gap: 12px;
+    padding: 15px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.cartitem img {
+    width: 65px;
+    height: 65px;
+    object-fit: cover;
+    border-radius: 7px;
+}
+
+.ci {
+    flex: 1;
+}
+
+.ci h4 {
+    margin-bottom: 5px;
+}
+
+.qty {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.qty button {
+    border: 0;
+    background: #111;
+    color: #fff;
+    width: 26px;
+    height: 26px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.remove {
+    border: 0;
+    background: none;
+    color: #b00000;
+    cursor: pointer;
+    margin-top: 6px;
+}
+
+.total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 22px;
+    font-weight: 800;
+    border-top: 2px solid #ddd;
+    padding-top: 20px;
+    margin-top: 20px;
+}
+
+.checkout {
+    width: 100%;
+    margin-top: 18px;
+    padding: 14px;
+    border: 0;
+    border-radius: 6px;
+    background: #25D366;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.order-now {
+    width: 100%;
+    margin-top: 10px;
+    padding: 14px;
+    border: 2px solid #111;
+    border-radius: 6px;
+    background: #fff;
+    color: #111;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.order-now:hover {
+    background: #111;
+    color: #fff;
+}
+
+.empty {
+    text-align: center;
+    color: #777;
+    padding: 50px 10px;
+}
+
+/* ORDER PAGE */
+.order-page {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 5000;
+    overflow: auto;
+    background:
+        repeating-linear-gradient(
+            135deg,
+            rgba(150,0,0,.035) 0 35px,
+            rgba(0,0,0,.025) 35px 70px
+        ),
+        #fff;
+}
+
+.order-page header {
+    min-height: auto;
+    background: linear-gradient(120deg,#111,#8d0000);
+    padding: 35px 20px;
+    color: #fff;
+}
+
+.order-page header h1 {
+    font: 700 48px Georgia, serif;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.order-wrap {
+    max-width: 850px;
+    margin: 35px auto;
+    padding: 0 18px;
+}
+
+.order-box {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 14px;
+    padding: 25px;
+    box-shadow: 0 8px 25px rgba(0,0,0,.09);
+    margin-bottom: 20px;
+}
+
+.order-box h2 {
+    font: 700 28px Georgia, serif;
+    color: #a00000;
+    margin-bottom: 18px;
+}
+
+.order-label {
+    display: block;
+    font-weight: 700;
+    margin: 14px 0 7px;
+}
+
+.order-input,
+.order-textarea {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #bbb;
+    border-radius: 7px;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+}
+
+.order-textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.order-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 12px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.order-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 22px;
+    font-weight: 800;
+    border-top: 2px solid #ddd;
+    padding-top: 18px;
+    margin-top: 12px;
+}
+
+.place-order {
+    width: 100%;
+    padding: 14px;
+    border: 0;
+    border-radius: 7px;
+    background: #b00000;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 18px;
+}
+
+.back-order {
+    display: block;
+    text-align: center;
+    margin-top: 14px;
+    color: #a00000;
+    text-decoration: none;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.order-note {
+    background: #fff5f5;
+    border-left: 4px solid #b00000;
+    padding: 12px;
+    margin-top: 15px;
+    color: #555;
+}
+
+.delivery-choice {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 10px 0 18px;
+}
+
+.delivery-choice input {
+    display: none;
+}
+
+.delivery-option {
+    display: block;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: 800;
+    background: #fff;
+}
+
+.delivery-choice input:checked + .delivery-option {
+    border-color: #b00000;
+    background: #fff5f5;
+    color: #a00000;
+}
+
+.payment-choice {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 10px 0 18px;
+}
+
+.payment-choice input {
+    display: none;
+}
+
+.payment-option {
+    display: block;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: 800;
+    background: #fff;
+}
+
+.payment-choice input:checked + .payment-option {
+    border-color: #b00000;
+    background: #fff5f5;
+    color: #a00000;
+}
+
+.pickup-note {
+    display: none;
+    background: #f5f5f5;
+    border-left: 4px solid #111;
+    padding: 12px;
+    margin-top: 12px;
+    color: #555;
+}
+
+.order-success {
+    display: none;
+    text-align: center;
+}
+
+/* MOBILE */
+@media(max-width:600px) {
+
+    header {
+        min-height: 60vh;
+    }
+
+    nav {
+        justify-content: flex-start;
+    }
+
+    .grid {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+        gap: 10px;
+    }
+
+    .card img {
+        height: 140px;
+    }
+
+    .info {
+        padding: 11px;
+    }
+
+    .info h3 {
+        font-size: 17px;
+    }
+
+    .delivery-choice,
+    .payment-choice {
+        grid-template-columns: 1fr;
+    }
+
+    .order-page header h1 {
+        font-size: 38px;
+    }
+
+    .order-box {
+        padding: 18px;
+    }
+
+    .order-row {
+        font-size: 14px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div>
+        <h1>Grill Hub</h1>
+        <p>
+            Cafe • Special Mix Grill • Indian Cuisine • Shawarma • Burgers • Drinks & Desserts
+        </p>
+        <a class="btn" href="#menu">View Full Menu</a>
+    </div>
+</header>
+
+<nav>
+    <a href="#menu">Menu</a>
+    <a href="#cart" onclick="openCart(); return false;">🛒 Cart</a>
+</nav>
+
+<main id="menu">
+
+    <div class="intro">
+        <h2>Our Menu</h2>
+        <p>Fresh food, great taste and something for everyone.</p>
+    </div>
+
+    <div id="menuRoot"></div>
+
+</main>
+
+<footer>
+    <h2>GRILL HUB</h2>
+    <p style="margin-top:8px">
+        Special Mix Grill • Cafe
+    </p>
+    <p style="margin-top:12px;font-size:12px;color:#999">
+        Menu photos are CC-licensed — see IMAGE-CREDITS.txt for attribution
+    </p>
+</footer>
+
+<button class="cart-btn" onclick="openCart()">
+    🛒 Cart <span id="count">0</span>
+</button>
+
+<!-- CART -->
+<div class="overlay" id="overlay">
+
+    <aside class="cart">
+
+        <div class="carthead">
+            <h2>Your Cart</h2>
+            <button class="close" onclick="closeCart()">×</button>
+        </div>
+
+        <div id="cartItems"></div>
+
+        <div class="total">
+            <span>Total</span>
+            <span>AED <span id="total">0.00</span></span>
+        </div>
+
+        <button class="checkout" onclick="checkout()">
+            ORDER ON WHATSAPP
+        </button>
+
+        <button class="order-now" onclick="orderNow()">
+            ORDER NOW
+        </button>
+
+    </aside>
+
+</div>
+
+<!-- ORDER PAGE -->
+<div class="order-page" id="orderPage">
+
+    <header>
+        <h1>Grill Hub</h1>
+        <p style="text-align:center;margin-top:8px">
+            Place Your Order
+        </p>
+    </header>
+
+    <div class="order-wrap">
+
+        <!-- ORDER SUMMARY -->
+        <div class="order-box">
+
+            <h2>Your Order</h2>
+
+            <div id="orderItems"></div>
+
+            <div class="order-total">
+                <span>Total</span>
+                <span>
+                    AED <span id="orderTotal">0.00</span>
+                </span>
+            </div>
+
+        </div>
+
+        <!-- CUSTOMER DETAILS -->
+        <div class="order-box" id="customerBox">
+
+            <h2>Delivery Details</h2>
+
+            <form id="orderForm">
+
+                <label class="order-label" for="customerName">
+                    Full Name
+                </label>
+
+                <input
+                    class="order-input"
+                    id="customerName"
+                    type="text"
+                    required
+                    placeholder="Enter your full name"
+                >
+
+                <label class="order-label" for="customerPhone">
+                    Phone Number
+                </label>
+
+                <input
+                    class="order-input"
+                    id="customerPhone"
+                    type="tel"
+                    required
+                    placeholder="Enter your phone number"
+                >
+
+                <label class="order-label">
+                    Order Type
+                </label>
+
+                <div class="delivery-choice">
+
+                    <div>
+                        <input
+                            type="radio"
+                            id="deliveryOption"
+                            name="orderType"
+                            value="Delivery"
+                            checked
+                        >
+
+                        <label
+                            class="delivery-option"
+                            for="deliveryOption"
+                        >
+                            🚗 DELIVERY
+                        </label>
+                    </div>
+
+                    <div>
+                        <input
+                            type="radio"
+                            id="pickupOption"
+                            name="orderType"
+                            value="Pickup"
+                        >
+
+                        <label
+                            class="delivery-option"
+                            for="pickupOption"
+                        >
+                            🏪 PICKUP
+                        </label>
+                    </div>
+
+                </div>
+
+                <div id="addressGroup">
+
+                    <label
+                        class="order-label"
+                        for="customerAddress"
+                    >
+                        Delivery Address
+                    </label>
+
+                    <textarea
+                        class="order-textarea"
+                        id="customerAddress"
+                        required
+                        placeholder="Enter your complete delivery address"
+                    ></textarea>
+
+                    <label class="order-label">
+                        Payment Method
+                    </label>
+
+                    <div class="payment-choice">
+
+                        <div>
+                            <input
+                                type="radio"
+                                id="cashOnDelivery"
+                                name="paymentMethod"
+                                value="Cash on Delivery"
+                                checked
+                            >
+                            <label
+                                class="payment-option"
+                                for="cashOnDelivery"
+                            >
+                                💵 CASH ON DELIVERY
+                            </label>
+                        </div>
+
+                        <div>
+                            <input
+                                type="radio"
+                                id="cardOnDelivery"
+                                name="paymentMethod"
+                                value="Card on Delivery"
+                            >
+                            <label
+                                class="payment-option"
+                                for="cardOnDelivery"
+                            >
+                                💳 CARD ON DELIVERY
+                            </label>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div
+                    class="pickup-note"
+                    id="pickupNote"
+                >
+                    🏪 You selected pickup. You can collect your order from Grill Hub.
+                </div>
+
+                <label
+                    class="order-label"
+                    for="customerNotes"
+                >
+                    Order Notes (optional)
+                </label>
+
+                <textarea
+                    class="order-textarea"
+                    id="customerNotes"
+                    placeholder="Apartment, building, extra instructions..."
+                ></textarea>
+
+                <div class="order-note">
+                    Please check your phone number and order type before placing the order.
+                </div>
+
+                <button
+                    class="place-order"
+                    type="submit"
+                >
+                    PLACE ORDER
+                </button>
+
+            </form>
+
+            <a
+                class="back-order"
+                onclick="closeOrderPage()"
+            >
+                ← Back to Menu
+            </a>
+
+        </div>
+
+        <!-- SUCCESS -->
+        <div
+            class="order-box order-success"
+            id="orderSuccess"
+        >
+
+            <h2>Order Received!</h2>
+
+            <p>
+                Thank you for ordering from Grill Hub.
+            </p>
+
+            <p style="margin-top:10px">
+                Your order details have been saved.
+            </p>
+
+            <a
+                class="back-order"
+                onclick="closeOrderPage()"
+            >
+                Return to Menu
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+/* =========================
+   MENU
+========================= */
+
+const menu = [
+
+    {
+        c:"Breakfast",
+        n:"Mughali Roti", 
+        p:8.0, 
+        i:"images/mughaliroti.jpg"
+},
+
+    {
+        c:"Breakfast",
+        n:"Beef Paratha",
+        p:8.0,
+        i:"images/beefparatha.jfif"
+    },
+
+    {
+        c:"Breakfast",
+        n:"Egg Paratha",
+        p:7.0,
+        i:"images/eggparatha.jfif"
+    },
+
+    {
+        c:"Breakfast",
+        n:"Cheese Paratha",
+        p:8.0,
+        i:"images/cheeseparatha.jpg"
+    },
+
+    {
+        c:"Breakfast",
+        n:"Aloo Paratha",
+        p:6.0,
+        i:"images/alooparatha.jpg"
+    },
+
+    {
+        c:"Breakfast",
+        n:"Poori Bhaji",
+        p:8.0,
+        i:"images/pooribhaji.jpg"
+    },
+
+    {
+        c:"Breakfast",
+        n:"Chana",
+        p:7.0,
+        i:"images/chana.jpg"
+    },
+
+    {
+        c:"Breakfast",
+        n:"Omelette",
+        p:6.0,
+        i:"images/omelette.jpg"
+    },
+
+    {
+        c:"Bread & Roti",
+        n:"Rumali Roti",
+        p:2.0,
+        i:"images/rumaliroti.jpg"
+    },
+
+    {
+        c:"Bread & Roti",
+        n:"Tandoori Roti",
+        p:1.5,
+        i:"images/tandooriroti.jpg"
+    },
+
+    {
+        c:"Bread & Roti",
+        n:"Butter Naan",
+        p:3.0,
+        i:"images/butternaan.jpg"
+    },
+
+    {
+        c:"Bread & Roti",
+        n:"Garlic Naan",
+        p:3.0,
+        i:"images/garlicnaan.jpg"
+    },
+
+    {
+        c:"Bread & Roti",
+        n:"Cheese Naan",
+        p:3.5,
+        i:"images/cheesenaan.jpg"
+    },
+
+    {
+        c:"Bread & Roti",
+        n:"Lachcha Paratha",
+        p:2.0,
+        i:"images/lachchaparatha.jpg"
+    },
+
+    {
+        c:"Bread & Roti",
+        n:"Chapati",
+        p:1.5,
+        i:"images/chapati.jpg"
+    },
+
+    {
+        c:"Grill",
+        n:"Charcoal Chicken",
+        p:15.0,
+        i:"images/charcoalchicken.jpg"
+    },
+
+    {
+        c:"Grill",
+        n:"Peri Peri Chicken",
+        p:18.0,
+        i:"images/periperichicken.jpg"
+    },
+
+    {
+        c:"Grill",
+        n:"Pepper Chicken",
+        p:18.0,
+        i:"images/pepperchicken.jpg"
+    },
+
+    {
+        c:"Grill",
+        n:"Green Chilli Chicken",
+        p:18.0,
+        i:"images/greenchillichicken.jpg"
+    },
+
+    {
+        c:"Grill",
+        n:"Grilled Chicken",
+        p:15.0,
+        i:"images/grilledchicken.jpg"
+    },
+
+    {
+        c:"Grill",
+        n:"Chicken Tikka",
+        p:18.0,
+        i:"images/chickentikka.jpg"
+    },
+
+    {
+        c:"Grill",
+        n:"Mutton Tikka",
+        p:24.0,
+        i:"images/muttontikka.jpg"
+    },
+
+    {
+        c:"Grill",
+        n:"Chicken Wings",
+        p:18.0,
+        i:"images/chickenwings.jpg"
+    },
+
+    {
+        c:"Grill",
+        n:"Mutton Kebab",
+        p:24.0,
+        i:"images/muttonkebab.jpg"
+    },
+
+    {
+        c:"Biryani",
+        n:"Chicken Biryani",
+        p:15.0,
+        i:"images/chickenbiryani.jpg"
+    },
+
+    {
+        c:"Biryani",
+        n:"Chicken 65 Biryani",
+        p:15.0,
+        i:"images/chicken65biryani.jpg"
+    },
+
+    {
+        c:"Biryani",
+        n:"Mutton Biryani",
+        p:18.0,
+        i:"images/muttonbiryani.jpg"
+    },
+
+    {
+        c:"Biryani",
+        n:"Egg Biryani",
+        p:14.0,
+        i:"images/eggbiryani.jpg"
+    },
+
+    {
+        c:"Biryani",
+        n:"Paneer Tikka Biryani",
+        p:14.0,
+        i:"images/paneertikkabiryani.jpg"
+    },
+
+    {
+        c:"Biryani",
+        n:"Vegetable Biryani",
+        p:10.0,
+        i:"images/vegetablebiryani.jpg"
+    },
+
+    {
+        c:"Fried Rice Special",
+        n:"Chicken Fried Rice",
+        p:15.0,
+        i:"images/chickenfriedrice.jpg"
+    },
+
+    {
+        c:"Fried Rice Special",
+        n:"Egg Fried Rice",
+        p:10.0,
+        i:"images/eggfriedrice.jpg"
+    },
+
+    {
+        c:"Fried Rice Special",
+        n:"Prawn Fried Rice",
+        p:18.0,
+        i:"images/prawnfriedrice.jpg"
+    },
+
+    {
+        c:"Fried Rice Special",
+        n:"Veg Fried Rice",
+        p:12.0,
+        i:"images/vegfriedrice.jpg"
+    },
+
+    {
+        c:"Fried Rice Special",
+        n:"Schezwan Fried Rice",
+        p:17.0,
+        i:"images/schezwanfriedrice.jpg"
+    },
+
+    {
+        c:"Noodles Special",
+        n:"Chicken Noodles",
+        p:17.0,
+        i:"images/chickennoodles.jpg"
+    },
+
+    {
+        c:"Noodles Special",
+        n:"Egg Noodles",
+        p:15.0,
+        i:"images/eggnoodles.jpg"
+    },
+
+    {
+        c:"Noodles Special",
+        n:"Prawn Noodles",
+        p:19.0,
+        i:"images/prawnnoodles.jpg"
+    },
+
+    {
+        c:"Noodles Special",
+        n:"Veg Hakka Noodles",
+        p:14.0,
+        i:"images/veghakkanoodles.jpg"
+    },
+
+    {
+        c:"Noodles Special",
+        n:"Schezwan Noodles",
+        p:19.0,
+        i:"images/schezwannoodles.jpg"
+    },
+
+    {
+        c:"Noodles Special",
+        n:"American Chopsuey",
+        p:21.0,
+        i:"images/americanchopsuey.jpg"
+    },
+
+    {
+        c:"Chicken",
+        n:"Chicken Curry",
+        p:10.0,
+        i:"images/chickencurry.jpg"
+    },
+
+    {
+        c:"Chicken",
+        n:"Chicken Masala",
+        p:12.0,
+        i:"images/chickenmasala.jpg"
+    },
+
+    {
+        c:"Chicken",
+        n:"Chicken Achari",
+        p:13.0,
+        i:"images/chickenachari.jpg"
+    },
+
+    {
+        c:"Chicken",
+        n:"Chicken Korma",
+        p:13.0,
+        i:"images/chickenkorma.jpg"
+    },
+
+    {
+        c:"Chicken",
+        n:"Chicken Tikka Masala",
+        p:14.0,
+        i:"images/chickentikkamasala.jpg"
+    },
+
+    {
+        c:"Chicken",
+        n:"Butter Chicken",
+        p:15.0,
+        i:"images/butterchicken.jpg"
+    },
+
+    {
+        c:"Chicken",
+        n:"Chicken Do Pyaza",
+        p:15.0,
+        i:"images/chickendopyaza.jpg"
+    },
+
+    {
+        c:"Chicken",
+        n:"Chicken Pepper",
+        p:13.0,
+        i:"images/chickenpepper.jpg"
+    },
+
+    {
+        c:"Beef",
+        n:"Beef Curry",
+        p:12.0,
+        i:"images/beefcurry.jpg"
+    },
+
+    {
+        c:"Beef",
+        n:"Beef Fry",
+        p:14.0,
+        i:"images/beeffry.jpg"
+    },
+
+    {
+        c:"Beef",
+        n:"Beef Masala",
+        p:15.0,
+        i:"images/beefmasala.jpg"
+    },
+
+    {
+        c:"Beef",
+        n:"Beef Roast",
+        p:13.0,
+        i:"images/beefroast.jpg"
+    },
+
+    {
+        c:"Beef",
+        n:"Beef Pepper",
+        p:14.0,
+        i:"images/beefpepper.jpg"
+    },
+
+    {
+        c:"Mutton",
+        n:"Mutton Curry",
+        p:15.0,
+        i:"images/muttoncurry.jpg"
+    },
+
+    {
+        c:"Mutton",
+        n:"Mutton Masala",
+        p:18.0,
+        i:"images/muttonmasala.jpg"
+    },
+
+    {
+        c:"Mutton",
+        n:"Mutton Pepper",
+        p:18.0,
+        i:"images/muttonpepper.jpg"
+    },
+
+    {
+        c:"Mutton",
+        n:"Mutton Roast",
+        p:18.0,
+        i:"images/muttonroast.jpg"
+    },
+
+    {
+        c:"Mutton",
+        n:"Mutton Butter Masala",
+        p:20.0,
+        i:"images/muttonbuttermasala.jpg"
+    },
+
+    {
+        c:"Vegetable",
+        n:"Paneer Butter Masala",
+        p:14.0,
+        i:"images/paneerbuttermasala.jpg"
+    },
+
+    {
+        c:"Vegetable",
+        n:"Paneer Tikka",
+        p:14.0,
+        i:"images/paneertikka.jpg"
+    },
+
+    {
+        c:"Vegetable",
+        n:"Paneer Masala",
+        p:14.0,
+        i:"images/paneermasala.jpg"
+    },
+
+    {
+        c:"Vegetable",
+        n:"Chana Masala",
+        p:10.0,
+        i:"images/chanamasala.jpg"
+    },
+
+    {
+        c:"Vegetable",
+        n:"Palak Paneer",
+        p:15.0,
+        i:"images/palakpaneer.jpg"
+    },
+
+    {
+        c:"Vegetable",
+        n:"Aloo Gobi",
+        p:8.0,
+        i:"images/aloogobi.jpg"
+    },
+
+    {
+        c:"Vegetable",
+        n:"Daal Tadka",
+        p:12.0,
+        i:"images/daaltadka.jpg"
+    },
+
+    {
+        c:"Vegetable",
+        n:"Matar Paneer",
+        p:15.0,
+        i:"images/matarpaneer.jpg"
+    },
+
+    {
+        c:"Vegetable",
+        n:"Paneer Shawarma",
+        p:8.0,
+        i:"images/paneershawarma.jpg"
+    },
+
+    {
+        c:"Vegetable",
+        n:"Hassan Matar",
+        p:6.0,
+        i:"images/hassanmatar.jpg"
+    },
+
+    {
+        c:"Shawarma",
+        n:"Sultan Arabic Shawarma",
+        p:10.0,
+        i:"images/sultanarabicshawarma.jpg"
+    },
+
+    {
+        c:"Shawarma",
+        n:"Hummus Shawarma",
+        p:10.0,
+        i:"images/hummusshawarma.jpg"
+    },
+
+    {
+        c:"Shawarma",
+        n:"Shawarma Plate",
+        p:10.0,
+        i:"images/shawarmaplate.jpg"
+    },
+
+    {
+        c:"Burgers & Sandwiches",
+        n:"Chicken Burger",
+        p:7.0,
+        i:"images/chickenburger.jpg"
+    },
+
+    {
+        c:"Burgers & Sandwiches",
+        n:"Beef Burger",
+        p:8.0,
+        i:"images/beefburger.jpg"
+    },
+
+    {
+        c:"Burgers & Sandwiches",
+        n:"Special Chicken Burger",
+        p:10.0,
+        i:"images/specialchickenburger.jpg"
+    },
+
+    {
+        c:"Burgers & Sandwiches",
+        n:"Special Beef Burger",
+        p:12.0,
+        i:"images/specialbeefburger.jpg"
+    },
+
+    {
+        c:"Burgers & Sandwiches",
+        n:"Aaloo Patty Burger",
+        p:7.0,
+        i:"images/aaloopattyburger.jpg"
+    },
+
+    {
+        c:"Burgers & Sandwiches",
+        n:"Royal Tikka Burger",
+        p:12.0,
+        i:"images/royaltikkaburger.jpg"
+    },
+
+    {
+        c:"Burgers & Sandwiches",
+        n:"Zinger Chicken Burger",
+        p:14.0,
+        i:"images/zingerchickenburger.jpg"
+    },
+
+    {
+        c:"Burgers & Sandwiches",
+        n:"Prawn Burger",
+        p:17.0,
+        i:"images/prawnburger.jpg"
+    },
+
+    {
+        c:"Burgers & Sandwiches",
+        n:"Fish Fillet Burger",
+        p:15.0,
+        i:"images/fishfilletburger.jpg"
+    },
+
+    {
+        c:"Burgers & Sandwiches",
+        n:"Double Decker Chicken Burger",
+        p:21.0,
+        i:"images/doubledeckerchickenburger.jpg"
+    },
+
+    {
+        c:"Burgers & Sandwiches",
+        n:"Double Decker Beef Burger",
+        p:22.0,
+        i:"images/doubledeckerbeefburger.jpg"
+    },
+
+    {
+        c:"Burgers & Sandwiches",
+        n:"Chicken Club Sandwich",
+        p:16.0,
+        i:"images/chickenclubsandwich.jpg"
+    },
+
+    {
+        c:"Burgers & Sandwiches",
+        n:"Zinger Club Sandwich",
+        p:18.0,
+        i:"images/zingerclubsandwich.jpg"
+    },
+
+    {
+        c:"Wraps",
+        n:"Chilly Chicken Wrap",
+        p:7.0,
+        i:"images/chillychickenwrap.jpg"
+    },
+
+    {
+        c:"Wraps",
+        n:"Chicken Tikka Wrap",
+        p:7.0,
+        i:"images/chickentikkawrap.jpg"
+    },
+
+    {
+        c:"Wraps",
+        n:"Chicken 65 Wrap",
+        p:7.0,
+        i:"images/chicken65wrap.jpg"
+    },
+
+    {
+        c:"Wraps",
+        n:"Green Chicken Wrap",
+        p:7.0,
+        i:"images/greenchickenwrap.jpg"
+    },
+
+    {
+        c:"Wraps",
+        n:"Grill Hub Special Wrap",
+        p:8.0,
+        i:"images/grillhubspecialwrap.jpg"
+    },
+
+    {
+        c:"Wraps",
+        n:"Egg Paratha Wrap",
+        p:4.0,
+        i:"images/eggparathawrap.jpg"
+    },
+
+    {
+        c:"Wraps",
+        n:"Cheese Paratha Wrap",
+        p:5.0,
+        i:"images/cheeseparathawrap.jpg"
+    },
+
+    {
+        c:"Wraps",
+        n:"Egg & Cheese Wrap",
+        p:6.0,
+        i:"images/eggandcheesewrap.jpg"
+    },
+
+    {
+        c:"Soup",
+        n:"Chicken Soup",
+        p:7.0,
+        i:"images/chickensoup.jpg"
+    },
+
+    {
+        c:"Soup",
+        n:"Sweet Corn Soup",
+        p:7.0,
+        i:"images/sweetcornsoup.jpg"
+    },
+
+    {
+        c:"Soup",
+        n:"Veg Soup",
+        p:6.0,
+        i:"images/vegsoup.jpg"
+    },
+
+    {
+        c:"Soup",
+        n:"Hot & Sour Soup",
+        p:7.0,
+        i:"images/hotandsoursoup.jpg"
+    },
+
+    {
+        c:"Fresh Juices",
+        n:"Orange Juice",
+        p:10.0,
+        i:"images/orangejuice.jpg"
+    },
+
+    {
+        c:"Fresh Juices",
+        n:"Mango Juice",
+        p:10.0,
+        i:"images/mangojuice.jpg"
+    },
+
+    {
+        c:"Fresh Juices",
+        n:"Watermelon Juice",
+        p:10.0,
+        i:"images/watermelonjuice.jpg"
+    },
+
+    {
+        c:"Fresh Juices",
+        n:"Pineapple Juice",
+        p:10.0,
+        i:"images/pineapplejuice.jpg"
+    },
+
+    {
+        c:"Fresh Juices",
+        n:"Pomegranate Juice",
+        p:10.0,
+        i:"images/pomegranatejuice.jpg"
+    },
+
+    {
+        c:"Fresh Juices",
+        n:"Apple Juice",
+        p:10.0,
+        i:"images/applejuice.jpg"
+    },
+
+    {
+        c:"Fresh Juices",
+        n:"Strawberry Juice",
+        p:10.0,
+        i:"images/strawberryjuice.jpg"
+    },
+
+    {
+        c:"Fresh Juices",
+        n:"Carrot Juice",
+        p:10.0,
+        i:"images/carrotjuice.jpg"
+    },
+
+    {
+        c:"Fresh Juices",
+        n:"Beetroot Juice",
+        p:10.0,
+        i:"images/beetrootjuice.jpg"
+    },
+
+    {
+        c:"Fresh Juices",
+        n:"Kiwi Juice",
+        p:10.0,
+        i:"images/kiwijuice.jpg"
+    },
+
+    {
+        c:"Mocktails",
+        n:"Red Velvet",
+        p:18.0,
+        i:"images/redvelvet.jpg"
+    },
+
+    {
+        c:"Mocktails",
+        n:"Energy",
+        p:18.0,
+        i:"images/energy.jpg"
+    },
+
+    {
+        c:"Mocktails",
+        n:"Strawberry Banana",
+        p:18.0,
+        i:"images/strawberrybanana.jpg"
+    },
+
+    {
+        c:"Mocktails",
+        n:"Avocado",
+        p:18.0,
+        i:"images/avocado.jpg"
+    },
+
+    {
+        c:"Milkshakes",
+        n:"Vanilla Shake",
+        p:12.0,
+        i:"images/vanillashake.jpg"
+    },
+
+    {
+        c:"Milkshakes",
+        n:"Strawberry Shake",
+        p:12.0,
+        i:"images/strawberryshake.jpg"
+    },
+
+    {
+        c:"Milkshakes",
+        n:"Chocolate Shake",
+        p:13.0,
+        i:"images/chocolateshake.jpg"
+    },
+
+    {
+        c:"Milkshakes",
+        n:"Oreo Shake",
+        p:13.0,
+        i:"images/oreoshake.jpg"
+    },
+
+    {
+        c:"Tea & Coffee",
+        n:"Karak Tea",
+        p:1.5,
+        i:"images/karaktea.jpg"
+    },
+
+    {
+        c:"Tea & Coffee",
+        n:"Fresh Milk Tea",
+        p:2.5,
+        i:"images/freshmilktea.jpg"
+    },
+
+    {
+        c:"Tea & Coffee",
+        n:"Coffee",
+        p:3.0,
+        i:"images/coffee.jpg"
+    },
+
+    {
+        c:"Tea & Coffee",
+        n:"Fresh Milk",
+        p:2.0,
+        i:"images/freshmilk.jpg"
+    },
+
+    {
+        c:"Tea & Coffee",
+        n:"Lemon Tea",
+        p:2.0,
+        i:"images/lemontea.jpg"
+    },
+
+    {
+        c:"Tea & Coffee",
+        n:"Green Tea",
+        p:3.0,
+        i:"images/greentea.jpg"
+    },
+
+    {
+        c:"Desserts",
+        n:"Shahi Tukda",
+        p:10.0,
+        i:"images/shahitukda.jpg"
+    },
+
+    {
+        c:"Desserts",
+        n:"Shahi Kheer",
+        p:10.0,
+        i:"images/shahikheer.jpg"
+    },
+
+    {
+        c:"Desserts",
+        n:"Gulab Jamun",
+        p:8.0,
+        i:"images/gulabjamun.jpg"
+    },
+
+    {
+        c:"Desserts",
+        n:"Suji Halwa",
+        p:6.0,
+        i:"images/sujihalwa.jpg"
+    }
+
+];
+
+/* =========================
+   HELPERS
+========================= */
+
+const root = document.getElementById("menuRoot");
+
+const cats = [...new Set(menu.map(x => x.c))];
+
+function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, function(m) {
+        return {
+            "&":"&amp;",
+            "<":"&lt;",
+            ">":"&gt;",
+            '"':"&quot;",
+            "'":"&#039;"
+        }[m];
+    });
+}
+
+function escapeJs(s) {
+    return String(s)
+        .replace(/\\/g, "\\\\")
+        .replace(/'/g, "\\'");
+}
+
+function fallbackImage(name) {
+
+    const label = escapeHtml(name || "Grill Hub");
+
+    return "data:image/svg+xml;charset=utf-8," +
+        encodeURIComponent(
+            `<svg xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 400 300">
+
+                <rect width="400" height="300" fill="#f3ecec"/>
+
+                <text
+                    x="200"
+                    y="142"
+                    font-family="Georgia,serif"
+                    font-size="27"
+                    fill="#a00000"
+                    text-anchor="middle">
+                    Grill Hub
+                </text>
+
+                <text
+                    x="200"
+                    y="176"
+                    font-family="Arial,sans-serif"
+                    font-size="17"
+                    fill="#777"
+                    text-anchor="middle">
+                    ${label}
+                </text>
+
+            </svg>`
+        );
+}
+
+function imgUrl(item) {
+    // Menu and cart rendering pass the complete item object.
+    // Accept both an object ({ i: "..." }) and a plain image path.
+    const src = typeof item === "string"
+        ? item.trim()
+        : (item && item.i ? String(item.i).trim() : "");
+
+    const name = (item && typeof item === "object" && item.n)
+        ? String(item.n)
+        : "Grill Hub";
+
+    return src || fallbackImage(name);
+}
+
+/* =========================
+   CREATE MENU
+========================= */
+
+root.innerHTML = cats.map(c => {
+
+    const categoryId =
+        c.toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-");
+
+    return `
+        <section
+            class="category"
+            id="${categoryId}"
+        >
+
+            <h2>${escapeHtml(c)}</h2>
+
+            <div class="grid">
+
+                ${menu
+                    .filter(x => x.c === c)
+                    .map(x => `
+
+                        <article class="card">
+
+                            <img
+                                src="${imgUrl(x)}"
+                                alt="${escapeHtml(x.n)}"
+                                loading="lazy"
+                                onerror="this.onerror=null;this.src=fallbackImage('${escapeJs(x.n)}')"
+                            >
+
+                            <div class="info">
+
+                                <h3>
+                                    ${escapeHtml(x.n)}
+                                </h3>
+
+                                <div class="price">
+                                    AED ${x.p.toFixed(2)}
+                                </div>
+
+                                <button
+                                    class="add"
+                                    onclick='addToCart(${JSON.stringify(x.n)}, ${x.p}, ${JSON.stringify(x.i)})'
+                                >
+                                    ADD TO CART
+                                </button>
+
+                            </div>
+
+                        </article>
+
+                    `)
+                    .join("")}
+
+            </div>
+
+        </section>
+    `;
+}).join("");
+
+/* =========================
+   CART
+========================= */
+
+// Cart starts fresh whenever the page is refreshed.
+let cart = [];
+
+try {
+    localStorage.removeItem("grillHubCart");
+} catch(e) {
+    // Ignore storage errors and keep the cart empty.
+}
+
+function saveCart() {
+    localStorage.setItem(
+        "grillHubCart",
+        JSON.stringify(cart)
+    );
+}
+
+function addToCart(n, p, i) {
+
+    let existing = cart.find(
+        item => item.n === n
+    );
+
+    if (existing) {
+
+        existing.q++;
+
+    } else {
+
+        cart.push({
+            n:n,
+            p:p,
+            i:i,
+            q:1
+        });
+
+    }
+
+    saveCart();
+    render();
+    openCart();
+}
+
+function change(index, difference) {
+
+    if (!cart[index]) return;
+
+    cart[index].q += difference;
+
+    if (cart[index].q < 1) {
+        cart.splice(index, 1);
+    }
+
+    saveCart();
+    render();
+}
+
+function removeItem(index) {
+
+    cart.splice(index, 1);
+
+    saveCart();
+    render();
+}
+
+function render() {
+
+    const box =
+        document.getElementById("cartItems");
+
+    const count =
+        cart.reduce(
+            (sum, item) =>
+                sum + Number(item.q || 0),
+            0
+        );
+
+    const total =
+        cart.reduce(
+            (sum, item) =>
+                sum +
+                Number(item.p || 0) *
+                Number(item.q || 0),
+            0
+        );
+
+    document.getElementById("count")
+        .textContent = count;
+
+    document.getElementById("total")
+        .textContent = total.toFixed(2);
+
+    if (!cart.length) {
+
+        box.innerHTML = `
+            <div class="empty">
+
+                <h3>Your cart is empty</h3>
+
+                <p>
+                    Add something delicious from our menu.
+                </p>
+
+            </div>
+        `;
+
+        return;
+    }
+
+    box.innerHTML = cart.map((x, i) => `
+
+        <div class="cartitem">
+
+            <img
+                src="${imgUrl(x)}"
+                alt="${escapeHtml(x.n)}"
+                onerror="this.onerror=null;this.src=fallbackImage('${escapeJs(x.n)}')"
+            >
+
+            <div class="ci">
+
+                <h4>
+                    ${escapeHtml(x.n)}
+                </h4>
+
+                <div>
+                    AED ${Number(x.p).toFixed(2)}
+                </div>
+
+                <div class="qty">
+
+                    <button
+                        onclick="change(${i}, -1)"
+                    >
+                        −
+                    </button>
+
+                    <b>${x.q}</b>
+
+                    <button
+                        onclick="change(${i}, 1)"
+                    >
+                        +
+                    </button>
+
+                </div>
+
+                <button
+                    class="remove"
+                    onclick="removeItem(${i})"
+                >
+                    Remove
+                </button>
+
+            </div>
+
+        </div>
+
+    `).join("");
+}
+
+/* =========================
+   OPEN / CLOSE CART
+========================= */
+
+function openCart() {
+    document.getElementById("overlay")
+        .style.display = "block";
+}
+
+function closeCart() {
+    document.getElementById("overlay")
+        .style.display = "none";
+}
+
+document
+    .getElementById("overlay")
+    .addEventListener("click", function(e) {
+
+        if (e.target.id === "overlay") {
+            closeCart();
+        }
+
+    });
+
+/* =========================
+   WHATSAPP ORDER
+========================= */
+
+function checkout() {
+
+    if (!cart.length) {
+        alert("Your cart is empty!");
+        return;
+    }
+
+    let message =
+        "🍽️ GRILL HUB ORDER\n\n";
+
+    let total = 0;
+
+    cart.forEach(item => {
+
+        const value =
+            Number(item.p) *
+            Number(item.q);
+
+        total += value;
+
+        message +=
+            `• ${item.n} x ${item.q} — AED ${value.toFixed(2)}\n`;
+
+    });
+
+    message +=
+        `\nTOTAL: AED ${total.toFixed(2)}`;
+
+    /*
+       CHANGE THIS NUMBER
+       TO YOUR GRILL HUB WHATSAPP NUMBER.
+
+       UAE example:
+       9715XXXXXXXX
+    */
+
+    const phone = "971000000000";
+
+    window.open(
+        "https://wa.me/" +
+        phone +
+        "?text=" +
+        encodeURIComponent(message),
+        "_blank"
+    );
+}
+
+/* =========================
+   ORDER NOW PAGE
+========================= */
+
+function orderNow() {
+
+    if (!cart.length) {
+
+        alert("Your cart is empty!");
+
+        return;
+    }
+
+    const items =
+        document.getElementById("orderItems");
+
+    let total = 0;
+
+    items.innerHTML = cart.map(item => {
+
+        const value =
+            Number(item.p) *
+            Number(item.q);
+
+        total += value;
+
+        return `
+            <div class="order-row">
+
+                <span>
+                    <b>${escapeHtml(item.n)}</b>
+                    × ${item.q}
+                </span>
+
+                <span>
+                    AED ${value.toFixed(2)}
+                </span>
+
+            </div>
+        `;
+
+    }).join("");
+
+    document.getElementById("orderTotal")
+        .textContent = total.toFixed(2);
+
+    document.getElementById("orderPage")
+        .style.display = "block";
+
+    document.getElementById("overlay")
+        .style.display = "none";
+
+    document.body.style.overflow = "hidden";
+
+    window.scrollTo(0, 0);
+}
+
+/* =========================
+   CLOSE ORDER PAGE
+========================= */
+
+function closeOrderPage() {
+
+    document.getElementById("orderPage")
+        .style.display = "none";
+
+    document.getElementById("orderSuccess")
+        .style.display = "none";
+
+    document.getElementById("customerBox")
+        .style.display = "block";
+
+    document.getElementById("orderForm")
+        .reset();
+
+    document.getElementById("addressGroup")
+        .style.display = "block";
+
+    document.getElementById("pickupNote")
+        .style.display = "none";
+
+    document.getElementById("customerAddress")
+        .required = true;
+
+    document.body.style.overflow = "";
+}
+
+/* =========================
+   DELIVERY / PICKUP
+========================= */
+
+function updateOrderType() {
+
+    const selected =
+        document.querySelector(
+            'input[name="orderType"]:checked'
+        );
+
+    const type =
+        selected ? selected.value : "Delivery";
+
+    const address =
+        document.getElementById("customerAddress");
+
+    const group =
+        document.getElementById("addressGroup");
+
+    const note =
+        document.getElementById("pickupNote");
+
+    if (type === "Pickup") {
+
+        group.style.display = "none";
+
+        note.style.display = "block";
+
+        address.required = false;
+
+    } else {
+
+        group.style.display = "block";
+
+        note.style.display = "none";
+
+        address.required = true;
+    }
+}
+
+document
+    .querySelectorAll('input[name="orderType"]')
+    .forEach(radio => {
+
+        radio.addEventListener(
+            "change",
+            updateOrderType
+        );
+
+    });
+
+/* =========================
+   PLACE ORDER
+========================= */
+
+document
+    .getElementById("orderForm")
+    .addEventListener("submit", function(e) {
+
+        e.preventDefault();
+
+        if (!cart.length) {
+
+            alert("Your cart is empty!");
+
+            return;
+        }
+
+        const name =
+            document
+                .getElementById("customerName")
+                .value
+                .trim();
+
+        const phone =
+            document
+                .getElementById("customerPhone")
+                .value
+                .trim();
+
+        const address =
+            document
+                .getElementById("customerAddress")
+                .value
+                .trim();
+
+        const notes =
+            document
+                .getElementById("customerNotes")
+                .value
+                .trim();
+
+        const selected =
+            document.querySelector(
+                'input[name="orderType"]:checked'
+            );
+
+        const type =
+            selected ? selected.value : "Delivery";
+
+        const selectedPayment =
+            document.querySelector(
+                'input[name="paymentMethod"]:checked'
+            );
+
+        const paymentMethod =
+            selectedPayment
+                ? selectedPayment.value
+                : "Cash on Delivery";
+
+        if (!name || !phone) {
+
+            alert(
+                "Please fill in your name and phone number."
+            );
+
+            return;
+        }
+
+        if (type === "Delivery" && !address) {
+
+            alert(
+                "Please enter your delivery address."
+            );
+
+            return;
+        }
+
+        const total =
+            cart.reduce(
+                (sum, item) =>
+                    sum +
+                    Number(item.p) *
+                    Number(item.q),
+                0
+            );
+
+        const order = {
+
+            customer: {
+                name: name,
+                phone: phone,
+                address: address,
+                notes: notes
+            },
+
+            orderType: type,
+
+            paymentMethod:
+                type === "Delivery"
+                    ? paymentMethod
+                    : "Not applicable",
+
+            items: cart,
+
+            total: total,
+
+            createdAt:
+                new Date().toISOString()
+        };
+
+        localStorage.setItem(
+            "grillHubLastOrder",
+            JSON.stringify(order)
+        );
+
+        document.getElementById("customerBox")
+            .style.display = "none";
+
+        document.getElementById("orderSuccess")
+            .style.display = "block";
+
+        cart = [];
+
+        saveCart();
+
+        render();
+
+    });
+
+/* =========================
+   START
+========================= */
+
+updateOrderType();
+render();
+
+</script>
+
+</body>
+</html>
+```
